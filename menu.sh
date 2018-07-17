@@ -4,13 +4,14 @@ uptime|awk '{print $3" "$4}'|grep days --silent
 then
 echo -n "System Uptime: " && uptime|awk '{print $3" "$4}'
 else
+echo -n "Address: " && ifconfig|grep 192|awk '{print $2}'
 echo -n "System Uptime: " && uptime|awk '{print $3}'
 fi
 echo =============================
 PS3='Enter Choice: '
 COLUMNS=12
 
-options=("Scan Drives" "Make Re-Block files" "Remove Re-Block files" "Run" "Status" "Quit")
+options=("Scan Drives" "Prepare Drives" "Start Format" "Status" "Reboot")
 
 select opt in "${options[@]}"
 do
@@ -25,40 +26,48 @@ case $opt in
 	./menu.sh
 	;;
 
-"Make Re-Block files")
+"Prepare Drives")
 	clear
 	for d in {3..99}
 	do
-	echo sg_format --format --size=512 /dev/sg$d >> hdd$d.sh
+        echo sg_format --format --size=512 /dev/sg$d >> hdd$d.sh
 	echo "./hdd$d.sh 2>/dev/null &" >> start_format.sh
 	chmod +x hdd*
 	chmod +x start_format.sh
 	done
 	clear
-	echo "Re-Block files have been created."
+	echo ""
+	echo "Script files have been created, ready for format."
+	echo ""
 	./menu.sh
 	;;
 
-"Remove Re-Block files")
+"Start Format")	
 	clear
-	for d in {3..99}
-	do
-	rm -rf hdd$d.sh
-	rm -rf start_format.sh  
-	done
-	clear
-	echo "Re-Block files have been removed."
+	if
+	ls|grep start_format.sh --silent
+	then 
+	./start_format.sh 2>/dev/null
+	sleep 1m
+	else
+        echo ""
+	echo "Please prepare drives first, then start format."
+	echo ""
 	./menu.sh
-	;;
-
-"Run")	
-	clear
-	./start_format.sh
-	sleep 1
+	fi 
+        for d in {3..99}
+        do
+        rm -rf hdd$d.sh
+        rm -rf start_format.sh
+        done
+        echo "Script files have been removed."
+	./menu.sh
 	;;
 
 "Status")
-        for d in {3..99}
+	clear
+        echo ==========Progress===========
+	for d in {3..99}
 	do
 	if
 	ps -a |grep hdd$d.sh --silent
@@ -66,12 +75,11 @@ case $opt in
 	echo "Drive $d is still in progress."
 	fi
 	done
+	./menu.sh
 	;;
 
-"Quit")
-	clear
-	sleep .5
-	break
+"Reboot")
+	reboot now
 	;;
 
 *)
