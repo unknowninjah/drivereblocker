@@ -1,4 +1,5 @@
 #!/bin/bash
+#this is a test
 if
 uptime|awk '{print $3" "$4}'|grep days --silent
 then
