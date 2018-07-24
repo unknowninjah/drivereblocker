@@ -28,7 +28,7 @@ case $opt in
 
 "Prepare Drives")
 	clear
-	for d in {3..99}
+	for d in {0..99}
 	do
         echo sg_format --format --size=512 /dev/sg$d >> hdd$d.sh
 	echo "./hdd$d.sh 2>/dev/null &" >> start_format.sh
@@ -55,7 +55,7 @@ case $opt in
 	echo ""
 	./menu.sh
 	fi 
-        for d in {3..99}
+        for d in {0..99}
         do
         rm -rf hdd$d.sh
         rm -rf start_format.sh
@@ -67,7 +67,7 @@ case $opt in
 "Status")
 	clear
         echo ==========Progress===========
-	for d in {3..99}
+	for d in {0..99}
 	do
 	if
 	ps -a |grep hdd$d.sh --silent
