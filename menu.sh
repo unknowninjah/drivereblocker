@@ -20,7 +20,7 @@ case $opt in
 	clear
 	echo =============================
         echo -n "Drive's Detected: "
-	sg_scan | awk '{print $1}'|grep -v 'sg0:\|sg1:\|sg2:' -c
+	sg_scan | awk '{print $1}'|grep -v 'sg0:\|sg1:\|sg2:\|sg3:\|sg4:' -c
 	echo =============================
 	sleep .5
 	./menu.sh
