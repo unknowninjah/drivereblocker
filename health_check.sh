@@ -4,10 +4,10 @@ echo -n "Checking drive health..."
 for i in {0..99}
 do
 echo "."
-smartctl -a /dev/sg$i 2>/dev/null|grep 'Product:\|Vendor:\|Logical block size\|Form Factor\|Serial number\|SMART Health Status\|Non-medium error count' >> $today.log && echo "======================================" >> $today.log
+smartctl -a /dev/sg$i 2>/dev/null|grep 'User Capacity\|Product:\|Vendor:\|Logical block size\|Form Factor\|Serial number\|SMART Health Status\|Non-medium error count' >> $today.log && echo "=====================================================" >> $today.log
 done
 echo "Drive health-check complete!"
 echo " "
 echo "Drive Status: "
-echo "======================================"
+echo "====================================================="
 cat $today.log

@@ -11,7 +11,7 @@ echo =============================
 PS3='Enter Choice: '
 COLUMNS=12
 
-options=("Scan Drives" "Prepare Drives" "Start Format" "Status" "Reboot")
+options=("Scan Drives" "Prepare Drives" "Start Format" "Status" "Health-Check"  "Reboot")
 
 select opt in "${options[@]}"
 do
@@ -20,7 +20,7 @@ case $opt in
 	clear
 	echo =============================
         echo -n "Drive's Detected: "
-	sg_scan | awk '{print $1}'|grep -v 'sg0:\|sg1:\|sg2:\|sg3:\|sg4:' -c
+	sg_scan | awk '{print $1}'|grep -v 'sg0:\|sg1:\|sg2:\|sg3:\|sg4:\|sg5:' -c
 	echo =============================
 	sleep .5
 	./menu.sh
@@ -44,6 +44,16 @@ case $opt in
 
 "Start Format")	
 	clear
+
+        if
+        ps -a |grep sg_format --silent
+        then
+        echo " "
+	echo "Please wait, for current format to complete!"
+        echo " "
+	fi || 
+
+
 	if
 	ls|grep start_format.sh --silent
 	then 
@@ -54,29 +64,37 @@ case $opt in
 	echo "Please prepare drives first, then start format."
 	echo ""
 	./menu.sh
-	fi 
-        for d in {0..99}
+	fi &&
+       
+	if
+	ls |grep start_format --silent
+	then 
+	for d in {0..99}
         do
         rm -rf hdd$d.sh
         rm -rf start_format.sh
         done
         echo "Script files have been removed."
+	else
 	./menu.sh
+	fi
 	;;
 
 "Status")
 	clear
         echo ==========Progress===========
-	for d in {0..99}
-	do
-	if
-	ps -a |grep hdd$d.sh --silent
-	then 
-	echo "Drive $d is still in progress."
-	fi
-	done
+	echo -n "Drive(s) still in progress: " && ps -a|grep format -c 
+	echo =============================
+	echo " "
 	./menu.sh
 	;;
+
+"Health-Check")
+clear
+./health_check.sh
+./menu.sh
+;;
+
 
 "Reboot")
 	reboot now
