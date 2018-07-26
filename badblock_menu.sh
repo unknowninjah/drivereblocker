@@ -74,6 +74,7 @@ for d in {0..99}
 do
 rm -rf HDD$d.sh
 rm -rf start_block_check.sh
+rm -rf *txt
 done
 echo "Script files have been removed."
 ./badblock_menu.sh
