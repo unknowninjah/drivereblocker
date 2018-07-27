@@ -32,6 +32,12 @@ case $opt in
 	do
         echo sg_format --format --size=512 /dev/sg$d >> hdd$d.sh
 	echo "./hdd$d.sh 2>/dev/null &" >> start_format.sh
+        echo "for d in {0..99}" >> start_format.sh
+        echo "do" >> start_format.sh
+        echo "rm -rf hdd$d.sh" >> start_format.sh
+        echo "rm -rf start_format.sh" >> start_format.sh
+        echo "done" >> start_format.sh
+        echo "echo Script files have been removed." >> start_format.sh
 	chmod +x hdd*
 	chmod +x start_format.sh
 	done
@@ -44,7 +50,7 @@ case $opt in
 
 "Start Format")	
 	clear
-
+echo step1 
         if
         ps -a |grep sg_format --silent
         then
@@ -52,35 +58,21 @@ case $opt in
 	echo "Please wait, for current format to complete!"
         echo " "
 	fi || 
-
+echo step2
 
 	if
-	ls|grep start_format.sh --silent
+	ls | grep start_format.sh --silent
 	then 
-	./start_format.sh 2>/dev/null
-	sleep 1m
+	./start_format.sh 
 	else
         echo ""
 	echo "Please prepare drives first, then start format."
 	echo ""
 	./menu.sh
-	fi &&
-       
-	if
-	ls |grep start_format --silent
-	then 
-	for d in {0..99}
-        do
-        rm -rf hdd$d.sh
-        rm -rf start_format.sh
-        done
-        echo "Script files have been removed."
-	else
-	./menu.sh
 	fi
 	;;
-
-"Status")
+	
+	"Status")
 	clear
         echo ==========Progress===========
 	echo -n "Drive(s) still in progress: " && ps -a|grep format -c 
