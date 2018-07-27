@@ -11,7 +11,7 @@ echo =============================
 PS3='Enter Choice: '
 COLUMNS=12
 
-options=("Scan Drives" "Prepare Drives" "Start Format" "Status" "Health-Check"  "Reboot")
+options=("Scan Drives" "Prepare Drives" "Start Format" "Status" "Health-Check" "Show Failed Drives" "Reboot")
 
 select opt in "${options[@]}"
 do
@@ -83,6 +83,11 @@ clear
 ./menu.sh
 ;;
 
+"Show Failed Drives")
+clear
+echo "Failed Drive(s)"
+cat TheDrives.log 2>/dev/null |grep Failed -A2|grep -v 'Vendor\|Failed'
+;;
 
 "Reboot")
 	reboot now
