@@ -11,7 +11,7 @@ echo =============================
 PS3='Enter Choice: '
 COLUMNS=12
 
-options=("Scan Drives" "Prepare Drives" "Start Format" "Status" "Health-Check" "Show Failed Drives" "Reboot")
+options=("Scan Drives" "Start Format" "Status" "Health-Check" "Show Failed Drives" "Reboot")
 
 select opt in "${options[@]}"
 do
@@ -26,7 +26,7 @@ case $opt in
 	./menu.sh
 	;;
 
-"Prepare Drives")
+"Start Format")	
         clear
         for d in {0..99}
         do
@@ -42,10 +42,8 @@ case $opt in
         echo ""
         echo "Script files have been created, ready for format."
         echo ""
-        ./menu.sh
-        ;;
 
-"Start Format")	
+
 	clear
 	echo ""
         if
@@ -87,6 +85,7 @@ clear
 clear
 echo "Failed Drive(s)"
 cat TheDrives.log 2>/dev/null |grep Failed -A2|grep -v 'Vendor\|Failed'
+./menu.sh
 ;;
 
 "Reboot")
