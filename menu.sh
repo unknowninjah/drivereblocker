@@ -85,6 +85,8 @@ clear
 clear
 echo "Failed Drive(s)"
 cat TheDrives.log 2>/dev/null |grep Failed -A2|grep -v 'Vendor\|Failed'
+echo " "
+echo " " 
 ./menu.sh
 ;;
 
