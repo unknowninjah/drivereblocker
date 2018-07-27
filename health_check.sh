@@ -4,7 +4,7 @@ echo -n "Checking drive health..."
 
 for i in {0..99}
 do
-echo "."
+echo -n "."
 
 if
 smartctl -i /dev/sg$i 2>/dev/null |grep 'Vendor:\|Serial number:\|SMART\|Product:' |grep 'device lacks SMART capability' --silent
