@@ -27,30 +27,27 @@ case $opt in
 	;;
 
 "Prepare Drives")
-	clear
-	for d in {0..99}
-	do
+        clear
+        for d in {0..99}
+        do
         echo sg_format --format --size=512 /dev/sg$d >> hdd$d.sh
 	echo "./hdd$d.sh 2>/dev/null &" >> start_format.sh
-        echo "for d in {0..99}" >> start_format.sh
-        echo "do" >> start_format.sh
-        echo "rm -rf hdd$d.sh" >> start_format.sh
-        echo "rm -rf start_format.sh" >> start_format.sh
-        echo "done" >> start_format.sh
-        echo "echo Script files have been removed." >> start_format.sh
-	chmod +x hdd*
-	chmod +x start_format.sh
-	done
+        chmod +x hdd*
+        chmod +x start_format.sh
+        done
+	
+	echo "rm -rf hdd* start_format.sh" >> start_format.sh
+
 	clear
-	echo ""
-	echo "Script files have been created, ready for format."
-	echo ""
-	./menu.sh
-	;;
+        echo ""
+        echo "Script files have been created, ready for format."
+        echo ""
+        ./menu.sh
+        ;;
 
 "Start Format")	
 	clear
-echo step1 
+	echo ""
         if
         ps -a |grep sg_format --silent
         then
@@ -58,8 +55,7 @@ echo step1
 	echo "Please wait, for current format to complete!"
         echo " "
 	fi || 
-echo step2
-
+	echo ""
 	if
 	ls | grep start_format.sh --silent
 	then 
