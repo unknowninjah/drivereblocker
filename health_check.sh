@@ -1,3 +1,4 @@
+rm -rf TheDrives.log
 clear
 echo -n "Checking drive health..."
 
