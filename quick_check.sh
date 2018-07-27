@@ -21,8 +21,7 @@ then
 echo "                      Drive $i Failed"
 smartctl -a /dev/sg$i 2>/dev/null |grep 'Vendor:\|Serial number:\|Logical block size:'
 else
-smartctl -i /dev/sg$i 2>/dev/null |grep 'Vendor:\|Serial number:\|Product:'
-smartctl -a /dev/sg$i 2>/dev/null |grep 'SMART Health\|Logical block size:'
+smartctl -a /dev/sg$i 2>/dev/null |grep 'User Capacity\|Product:\|Vendor:\|Logical block size\|Form Factor\|Serial number\|SMART Health Status\|Non-medium error count' | uniq
 fi
 
 if
