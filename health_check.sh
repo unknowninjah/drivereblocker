@@ -39,7 +39,7 @@ fi
 
 done
 
-echo "Drive health-check complete!"
+echo "Done!"
 echo " "
 echo "Drive Status: "
 echo "====================================================="
