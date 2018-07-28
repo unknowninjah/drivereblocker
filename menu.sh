@@ -77,14 +77,12 @@ case $opt in
 
 "Health-Check")
 clear
-./health_check.sh
-./menu.sh
+./START_Background_Short_test.sh
 ;;
 
 "Show Failed Drives")
 clear
-echo "Failed Drive(s)"
-cat TheDrives.log 2>/dev/null |grep Failed -A2|grep -v 'Vendor\|Failed'
+./CHECK_Short_test_results.sh
 echo " "
 echo " " 
 ./menu.sh
